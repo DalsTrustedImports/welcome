@@ -282,7 +282,7 @@
 
         .metric-item {
             text-align: center;
-            flex: 1 1 120px; /* Responsive wrapping */
+            flex: 1 1 120px;
         }
 
         .metric-item h3 {
@@ -314,12 +314,11 @@
             box-shadow: 0 20px 80px rgba(0,0,0,0.5);
             background: #000;
             position: relative;
-            /* Aspect ratio hack for responsiveness */
-            padding-bottom: 56.25%; /* 16:9 */
+            padding-bottom: 56.25%;
             height: 0;
         }
 
-        iframe {
+        .video-wrapper iframe {
             position: absolute;
             top: 0;
             left: 0;
@@ -400,7 +399,7 @@
             padding: 15px;
             border-radius: 12px;
             display: flex;
-            flex-direction: column; /* Stack on mobile */
+            flex-direction: column;
             gap: 10px;
             align-items: center;
             color: #777;
@@ -455,7 +454,6 @@
             position: relative;
         }
         
-        /* Animated dot at end of progress */
         .progress-fill::after {
             content: '';
             position: absolute;
@@ -479,39 +477,171 @@
         
         .status-steps span.active { color: white; font-weight: 600; }
 
-        /* --- MARQUEE (FIXED) --- */
+        /* --- CAROUSEL REVIEWS (MOBILE-FRIENDLY) --- */
         .reviews-section {
             padding: 80px 0;
-            width: 100%;
-            overflow: hidden; /* Critical for mobile */
+            position: relative;
+            overflow: hidden;
         }
 
-        .marquee-wrapper {
-            display: flex;
-            width: 100%;
-            mask-image: linear-gradient(to right, transparent, black 10%, black 20%, transparent);
-            -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+        .carousel-container {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 60px;
         }
 
-        .marquee-content {
+        .carousel-wrapper {
+            overflow: hidden;
+            border-radius: 20px;
+        }
+
+        .carousel-track {
             display: flex;
             gap: 20px;
-            animation: scroll 300s linear infinite;
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            cursor: grab;
         }
 
-        .review-img {
-            width: 200px; /* Smaller for mobile */
-            height: 350px;
-            background: #1a1a1a;
-            border-radius: 16px;
+        .carousel-track:active {
+            cursor: grabbing;
+        }
+
+        .carousel-slide {
+            flex: 0 0 auto;
+            width: 320px;
+            scroll-snap-align: center;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 500px;
             object-fit: cover;
+            border-radius: 16px;
             border: 1px solid var(--glass-border);
-            flex-shrink: 0; /* Prevents squishing */
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            cursor: pointer;
+            transition: transform 0.3s ease;
         }
 
-        @keyframes scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+        .carousel-slide img:hover {
+            transform: scale(1.02);
+        }
+
+        /* Navigation Buttons */
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.3s ease;
+            z-index: 10;
+            color: white;
+        }
+
+        .carousel-btn:hover {
+            background: var(--primary-orange);
+            border-color: var(--primary-orange);
+            box-shadow: 0 0 20px rgba(255, 107, 0, 0.5);
+        }
+
+        .carousel-btn.prev { left: 5px; }
+        .carousel-btn.next { right: 5px; }
+
+        /* Dots Indicator */
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+            padding: 0 20px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        .dot:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        .dot.active {
+            background: var(--primary-orange);
+            width: 30px;
+            border-radius: 5px;
+        }
+
+        .swipe-hint {
+            text-align: center;
+            margin-top: 25px;
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        /* Image Modal */
+        .image-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: zoom-out;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s ease;
+        }
+
+        .image-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .image-modal img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .image-modal.active img {
+            transform: scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 40px;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .modal-close:hover {
+            color: var(--primary-orange);
         }
 
         /* --- TEASER --- */
@@ -563,23 +693,57 @@
 
         /* --- RESPONSIVE MEDIA QUERIES --- */
         @media (max-width: 768px) {
-            .nav-links { display: none; } /* Hide desktop nav */
-            .menu-toggle { display: flex; } /* Show hamburger */
+            .nav-links { display: none; }
+            .menu-toggle { display: flex; }
             
             .hero-btns {
                 flex-direction: column;
                 width: 100%;
             }
             .main-cta, .secondary-cta {
-                width: 100%; /* Full width buttons on mobile */
+                width: 100%;
             }
             
             .glow-orb {
-                opacity: 0.2; /* Brighter glow on mobile */
+                opacity: 0.2;
             }
 
-            .marquee-content {
-                animation-duration: 20s; /* Faster on mobile */
+            .carousel-container {
+                padding: 0 15px;
+            }
+
+            .carousel-btn {
+                width: 40px;
+                height: 40px;
+            }
+
+            .carousel-btn.prev { left: 5px; }
+            .carousel-btn.next { right: 5px; }
+
+            .carousel-slide {
+                width: 280px;
+            }
+
+            .carousel-slide img {
+                height: 420px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .carousel-btn {
+                display: none;
+            }
+
+            .carousel-container {
+                padding: 0 10px;
+            }
+
+            .carousel-slide {
+                width: 260px;
+            }
+
+            .carousel-slide img {
+                height: 400px;
             }
         }
 
@@ -706,17 +870,22 @@
                 <p>Introducing DALs Trusted Imports; Your trusted import Partner.</p>
             </div>
             <div class="video-wrapper reveal" id="videoWrapper">
-                <!-- Added mute=1 and playsinline=1 for better Mobile AutoPlay compatibility -->
-               <iframe 
-    id="promoVideo"
-    src="https://www.youtube.com/embed/lw01PzcOsZA?autoplay=1&unmute=1&playsinline=1&loop=1&playlist=lw01PzcOsZA" 
-    title="DALs Promo" 
-    frameborder="0" 
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-    referrerpolicy="strict-origin-when-cross-origin"
-    allowfullscreen>
-</iframe>
-              </iframe>
+                <iframe 
+                    id="promoVideo"
+                    src="https://www.youtube.com/embed/lw01PzcOsZA?rel=0&modestbranding=1&playsinline=1" 
+                    title="DALs Promo" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allowfullscreen
+                    loading="lazy">
+                </iframe>
+            </div>
+            <!-- Fallback link -->
+            <div style="text-align: center; margin-top: 15px;">
+                <a href="https://youtu.be/lw01PzcOsZA" target="_blank" style="color: var(--text-gray); font-size: 0.85rem; text-decoration: underline;">
+                    Video not loading? Click here to watch on YouTube
+                </a>
             </div>
         </div>
     </section>
@@ -780,32 +949,81 @@
         </div>
     </section>
 
-    <!-- Social Proof (Infinite Marquee) -->
+    <!-- Social Proof (Swipeable Carousel) -->
     <section class="reviews-section" id="reviews">
         <div class="container section-header reveal">
             <h2>Trusted By Importers</h2>
             <p>Real results from people who import products with DALs.</p>
         </div>
 
-        <div class="marquee-wrapper">
-            <div class="marquee-content">
-                <!-- Using placeholder images that mimic Whatsapp screenshots dimensions -->
-                <img src="https://onlinegigs5.wordpress.com/wp-content/uploads/2026/02/image_editor_output_image1068609913-17702952090246747234010193909706.jpg?w=768" class="review-img" alt="Review">
-                <img src="https://onlinegigs5.wordpress.com/wp-content/uploads/2026/02/20260205_120321-015058282661585215924.jpeg?w=768" class="review-img" alt="Review">
-                <img src="https://onlinegigs5.wordpress.com/wp-content/uploads/2026/02/20260205_120635-016769138569058773537.jpeg?w=768" class="review-img" alt="Review">
-                <img src="https://onlinegigs5.wordpress.com/wp-content/uploads/2026/02/20260205_115854-014519557635506798933.jpeg?w=768" class="review-img" alt="Review">
-                <img src="https://onlinegigs5.wordpress.com/wp-content/uploads/2026/02/20260205_115654-017598305036529005623.jpeg?w=768" class="review-img" alt="Review">
-                <img src="https://onlinegigs5.wordpress.com/wp-content/uploads/2026/02/20260205_115140-015389241567713825357.jpeg?w=768" class="review-img" alt="Review">
-                <!-- Duplicates for infinite loop -->
-                 <img src="https://onlinegigs5.wordpress.com/wp-content/uploads/2026/02/20260205_143047-017855757009799228730.jpeg?w=768" class="review-img" alt="Review">
-                <img src="https://onlinegigs5.wordpress.com/wp-content/uploads/2026/02/20260205_144154-015329956261301276875.jpeg?w=768" class="review-img" alt="Review">
-                <img src="https://onlinegigs5.wordpress.com/wp-content/uploads/2026/02/20260205_144752-015805152160883283452.jpeg?w=768" class="review-img" alt="Review">
-                <img src="https://onlinegigs5.wordpress.com/wp-content/uploads/2026/02/20260205_143409-014828717365616106794.jpeg?w=768" class="review-img" alt="Review">
-                <img src="https://onlinegigs5.wordpress.com/wp-content/uploads/2026/02/20260205_143806-012524908319376642862.jpeg?w=768" class="review-img" alt="Review">
-                <img src="https://onlinegigs5.wordpress.com/wp-content/uploads/2026/02/20260205_140456-011434378237712949093.jpeg?w=768" class="review-img" alt="Review">
+        <div class="carousel-container">
+            <button class="carousel-btn prev" onclick="scrollCarousel(-1)" aria-label="Previous">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+                </svg>
+            </button>
+
+            <div class="carousel-wrapper" id="reviewCarousel">
+                <div class="carousel-track" id="carouselTrack">
+                    <div class="carousel-slide">
+                        <img src="https://onlinegigs5.wordpress.com/wp-content/uploads/2026/02/image_editor_output_image1068609913-17702952090246747234010193909706.jpg?w=768" alt="Customer Review 1">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://onlinegigs5.wordpress.com/wp-content/uploads/2026/02/20260205_120321-015058282661585215924.jpeg?w=768" alt="Customer Review 2">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://onlinegigs5.wordpress.com/wp-content/uploads/2026/02/20260205_120635-016769138569058773537.jpeg?w=768" alt="Customer Review 3">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://onlinegigs5.wordpress.com/wp-content/uploads/2026/02/20260205_115854-014519557635506798933.jpeg?w=768" alt="Customer Review 4">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://onlinegigs5.wordpress.com/wp-content/uploads/2026/02/20260205_115654-017598305036529005623.jpeg?w=768" alt="Customer Review 5">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://onlinegigs5.wordpress.com/wp-content/uploads/2026/02/20260205_115140-015389241567713825357.jpeg?w=768" alt="Customer Review 6">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://onlinegigs5.wordpress.com/wp-content/uploads/2026/02/20260205_143047-017855757009799228730.jpeg?w=768" alt="Customer Review 7">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://onlinegigs5.wordpress.com/wp-content/uploads/2026/02/20260205_144154-015329956261301276875.jpeg?w=768" alt="Customer Review 8">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://onlinegigs5.wordpress.com/wp-content/uploads/2026/02/20260205_144752-015805152160883283452.jpeg?w=768" alt="Customer Review 9">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://onlinegigs5.wordpress.com/wp-content/uploads/2026/02/20260205_143409-014828717365616106794.jpeg?w=768" alt="Customer Review 10">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://onlinegigs5.wordpress.com/wp-content/uploads/2026/02/20260205_143806-012524908319376642862.jpeg?w=768" alt="Customer Review 11">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://onlinegigs5.wordpress.com/wp-content/uploads/2026/02/20260205_140456-011434378237712949093.jpeg?w=768" alt="Customer Review 12">
+                    </div>
+                </div>
             </div>
+
+            <button class="carousel-btn next" onclick="scrollCarousel(1)" aria-label="Next">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/>
+                </svg>
+            </button>
         </div>
+
+        <!-- Carousel Indicators (Dots) -->
+        <div class="carousel-dots" id="carouselDots"></div>
+
+        <p class="swipe-hint">
+            👆 Swipe or use arrows to see more reviews
+        </p>
     </section>
+
+    <!-- Image Modal for Zoom -->
+    <div class="image-modal" id="imageModal">
+        <span class="modal-close" onclick="closeModal()">&times;</span>
+        <img src="" alt="Review Image" id="modalImage">
+    </div>
 
     <!-- Future Program Teaser -->
     <section class="program-teaser">
@@ -844,7 +1062,6 @@
             const menu = document.getElementById('mobileMenu');
             menu.classList.toggle('open');
             
-            // Animate hamburger bars
             const bars = document.querySelectorAll('.bar');
             if (menu.classList.contains('open')) {
                 bars[0].style.transform = "rotate(45deg) translate(5px, 6px)";
@@ -857,14 +1074,14 @@
             }
         }
 
-        // 2. Scroll Reveal (Optimized for Mobile)
+        // 2. Scroll Reveal
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('active');
                 }
             });
-        }, { threshold: 0.1 }); // Triggers when 10% visible
+        }, { threshold: 0.1 });
 
         document.querySelectorAll('.reveal').forEach(el => {
             observer.observe(el);
@@ -878,15 +1095,170 @@
                 toggleMenu();
             }
         });
+
+        // 4. Carousel Functionality
+        let currentSlide = 0;
+        const track = document.getElementById('carouselTrack');
+        const slides = track.querySelectorAll('.carousel-slide');
+        const dotsContainer = document.getElementById('carouselDots');
+        const totalSlides = slides.length;
+
+        // Create dots
+        slides.forEach((_, index) => {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            if (index === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => goToSlide(index));
+            dotsContainer.appendChild(dot);
+        });
+
+        function getSlideWidth() {
+            return slides[0].offsetWidth + 20; // width + gap
+        }
+
+        function getVisibleSlides() {
+            const containerWidth = document.querySelector('.carousel-wrapper').offsetWidth;
+            return Math.floor(containerWidth / getSlideWidth());
+        }
+
+        function updateCarousel() {
+            const slideWidth = getSlideWidth();
+            const maxSlide = Math.max(0, totalSlides - getVisibleSlides());
+            
+            if (currentSlide > maxSlide) currentSlide = maxSlide;
+            if (currentSlide < 0) currentSlide = 0;
+            
+            track.style.transform = `translateX(-${currentSlide * slideWidth}px)`;
+            
+            // Update dots
+            document.querySelectorAll('.dot').forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
+        }
+
+        function scrollCarousel(direction) {
+            const maxSlide = Math.max(0, totalSlides - getVisibleSlides());
+            currentSlide += direction;
+            
+            if (currentSlide < 0) currentSlide = maxSlide;
+            if (currentSlide > maxSlide) currentSlide = 0;
+            
+            updateCarousel();
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            updateCarousel();
+        }
+
+        // Touch/Swipe support for mobile
+        let startX = 0;
+        let currentX = 0;
+        let isDragging = false;
+
+        track.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+            isDragging = true;
+        }, { passive: true });
+
+        track.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            currentX = e.touches[0].clientX;
+        }, { passive: true });
+
+        track.addEventListener('touchend', () => {
+            if (!isDragging) return;
+            const diff = startX - currentX;
+            if (Math.abs(diff) > 50) {
+                scrollCarousel(diff > 0 ? 1 : -1);
+            }
+            isDragging = false;
+        });
+
+        // Mouse drag support for desktop
+        let mouseStartX = 0;
+        let mouseDown = false;
+
+        track.addEventListener('mousedown', (e) => {
+            mouseStartX = e.clientX;
+            mouseDown = true;
+            track.style.cursor = 'grabbing';
+        });
+
+        track.addEventListener('mousemove', (e) => {
+            if (!mouseDown) return;
+            e.preventDefault();
+        });
+
+        track.addEventListener('mouseup', (e) => {
+            if (!mouseDown) return;
+            const diff = mouseStartX - e.clientX;
+            if (Math.abs(diff) > 50) {
+                scrollCarousel(diff > 0 ? 1 : -1);
+            }
+            mouseDown = false;
+            track.style.cursor = 'grab';
+        });
+
+        track.addEventListener('mouseleave', () => {
+            mouseDown = false;
+            track.style.cursor = 'grab';
+        });
+
+        // Auto-play carousel
+        let autoplayInterval = setInterval(() => {
+            scrollCarousel(1);
+        }, 5000);
+
+        // Pause autoplay on hover/touch
+        const carouselContainer = document.querySelector('.carousel-container');
+        carouselContainer.addEventListener('mouseenter', () => clearInterval(autoplayInterval));
+        carouselContainer.addEventListener('mouseleave', () => {
+            autoplayInterval = setInterval(() => scrollCarousel(1), 5000);
+        });
+        carouselContainer.addEventListener('touchstart', () => clearInterval(autoplayInterval), { passive: true });
+        carouselContainer.addEventListener('touchend', () => {
+            autoplayInterval = setInterval(() => scrollCarousel(1), 5000);
+        });
+
+        // Recalculate on window resize
+        window.addEventListener('resize', () => {
+            updateCarousel();
+        });
+
+        // 5. Image Modal (Click to zoom)
+        const modal = document.getElementById('imageModal');
+        const modalImage = document.getElementById('modalImage');
+
+        slides.forEach(slide => {
+            const img = slide.querySelector('img');
+            img.addEventListener('click', function() {
+                modalImage.src = this.src;
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                closeModal();
+            }
+        });
+
+        // Initialize carousel
+        updateCarousel();
     </script>
 </body>
-
 </html>
-
-
-
-
-
-
-
-
