@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>DALs TRUSTED IMPORTS | Your Trusted Import Partner</title>
+    <title>DALs TRUSTED IMPORTS® | Your Trusted Import Partner</title>
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -77,6 +77,49 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+        }
+
+        /* --- REGISTERED BADGE STYLES --- */
+        .registered-badge {
+            font-size: 0.45em;
+            vertical-align: super;
+            line-height: 1;
+            font-weight: 700;
+            opacity: 0.85;
+            margin-left: 1px;
+            font-style: normal;
+            -webkit-text-fill-color: currentColor;
+            background: none;
+            -webkit-background-clip: unset;
+            background-clip: unset;
+        }
+
+        /* Badge inside gradient text inherits the gradient */
+        .gradient-text .registered-badge {
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Badge in nav logo - slightly smaller, tuned for nav context */
+        .logo .registered-badge {
+            font-size: 0.5em;
+            -webkit-text-fill-color: currentColor;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Badge in footer - white color context */
+        footer .registered-badge {
+            font-size: 0.55em;
+            -webkit-text-fill-color: #666;
+            background: none;
+            -webkit-background-clip: unset;
+            background-clip: unset;
+            color: #666;
         }
 
         /* Smooth Reveal Animation */
@@ -793,7 +836,7 @@
         <div class="container nav-content">
             <a href="#" class="logo">
                 <img src="https://onlinegigs5.wordpress.com/wp-content/uploads/2026/01/20260128_1912427218177508679986788.png?w=768" alt="DALs Logo">
-                <span class="gradient-text">DALs TRUSTED IMPORTS</span>
+                <span class="gradient-text">DALs TRUSTED IMPORTS<sup class="registered-badge">®</sup></span>
             </a>
             
             <!-- Desktop Links -->
@@ -830,7 +873,7 @@
             <h1 class="reveal">
                 <span>The Future of Importation</span>
                 <div class="gradient-text">Your Trusted</div>
-                Import Partner
+                Import Partner<sup class="registered-badge" style="-webkit-text-fill-color: #fff;">®</sup>
             </h1>
             <p class="reveal">
                 We bridge the gap between You and China. Order directly from manufacturers, track in real-time, and get doorstep delivery. 
@@ -866,7 +909,7 @@
     <section class="video-section">
         <div class="container">
             <div class="section-header reveal">
-                <h2>Experience The Quality Goods With DALs</h2>
+                <h2>Experience The Quality Goods With DALs<sup class="registered-badge" style="font-size:0.4em; -webkit-text-fill-color:#fff;">®</sup></h2>
                 <p>Introducing DALs Trusted Imports; Your trusted import Partner.</p>
             </div>
             <div class="video-wrapper reveal" id="videoWrapper">
@@ -894,7 +937,7 @@
     <section class="features" id="how-it-works">
         <div class="container">
             <div class="section-header reveal">
-                <h2>Why Smart Importers Choose DALs</h2>
+                <h2>Why Smart Importers Choose DALs<sup class="registered-badge" style="font-size:0.4em; -webkit-text-fill-color:#fff;">®</sup></h2>
                 <p>We don't just import your quality goods. We deliver peace of mind.</p>
             </div>
 
@@ -924,7 +967,7 @@
     <section class="tracking-preview" id="tracking">
         <div class="container">
             <div class="reveal">
-                <h2 class="gradient-text" style="font-size: clamp(2rem, 5vw, 2.8rem); font-family: var(--font-display);">DALs Logistics System</h2>
+                <h2 class="gradient-text" style="font-size: clamp(2rem, 5vw, 2.8rem); font-family: var(--font-display);">DALs Logistics System<sup class="registered-badge">®</sup></h2>
                 <p style="color: var(--text-gray); margin-top: 10px;">The power of visibility in your hands.</p>
             </div>
 
@@ -953,7 +996,7 @@
     <section class="reviews-section" id="reviews">
         <div class="container section-header reveal">
             <h2>Trusted By Importers</h2>
-            <p>Real results from people who import products with DALs.</p>
+            <p>Real results from people who import products with DALs<sup class="registered-badge" style="font-size:0.55em; -webkit-text-fill-color:var(--text-gray);">®</sup>.</p>
         </div>
 
         <div class="carousel-container">
@@ -1044,9 +1087,9 @@
         <div class="container">
             <div class="logo" style="justify-content: center; margin-bottom: 20px;">
                 <img src="https://onlinegigs5.wordpress.com/wp-content/uploads/2026/01/20260128_1912427218177508679986788.png?w=768" alt="Logo" style="height: 30px;">
-                DALs TRUSTED IMPORTS
+                DALs TRUSTED IMPORTS<sup class="registered-badge">®</sup>
             </div>
-            <p>&copy; 2026 DALs Trusted Imports.</p>
+            <p>&copy; 2026 DALs Trusted Imports<sup class="registered-badge">®</sup>. All rights reserved.</p>
         </div>
     </footer>
 
@@ -1262,4 +1305,3 @@
     </script>
 </body>
 </html>
-
